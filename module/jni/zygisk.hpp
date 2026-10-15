@@ -298,7 +298,6 @@ void zygisk_module_entry(zygisk::internal::api_table *table, JNIEnv *env) { \
 // your module running in a target process. The function has to accept an integer value,
 // which is a Unix domain socket that is connected to the target process.
 // See Api::connectCompanion() for more info.
-.
 //
 // NOTE: the function can run concurrently on multiple threads.
 // Be aware of race conditions if you have globally shared resources.
