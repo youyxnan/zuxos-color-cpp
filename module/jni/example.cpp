@@ -1,5 +1,6 @@
 #include <android/log.h>
 #include <cstdlib>
+#include <cstdio>
 #include <string>
 #include <thread>
 #include <chrono>
@@ -14,8 +15,7 @@ using zygisk::ServerSpecializeArgs;
 class ZuxosColorModule : public zygisk::ModuleBase {
 public:
     void onLoad(Api *api, JNIEnv *env) override {
-        this->api = api;
-        this->env = env;
+        // 不需要保存 api 和 env，后续逻辑不会用到
     }
 
     void postServerSpecialize(const ServerSpecializeArgs *args) override {
@@ -47,7 +47,7 @@ public:
                             (last_state != "Awake" && last_state != "ON")) {
                             
                             LOGD("检测到亮屏，开始执行色彩恢复...");
-                            // 以 root 权限在后台调用脚本（加 & 避免阻塞系统进程）
+                            // 以 root 权限在后台调用脚本
                             system("su -c 'sh /data/adb/modules/zuxos_custom_color/scripts/apply_conf.sh' &");
                         }
                         last_state = current_state;
